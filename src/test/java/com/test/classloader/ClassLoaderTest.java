@@ -3,8 +3,8 @@ package com.test.classloader;
 import java.net.URL;
 
 import org.junit.Test;
-
-import sun.misc.Launcher;
+// java 8
+//import sun.misc.Launcher;
 
 public class ClassLoaderTest {
 
@@ -13,9 +13,9 @@ public class ClassLoaderTest {
      */
     @Test
     public void testBootstrapClassLoader() {
-        for (URL url : Launcher.getBootstrapClassPath().getURLs()) {
-            System.out.println(url);
-        }
+//        for (URL url : Launcher.getBootstrapClassPath().getURLs()) {
+//            System.out.println(url);
+//        }
     }
 
     /**
