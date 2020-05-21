@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-public class ClazzTest {
+public class ClassTest {
 
     @Test
     public void testPrimitive() throws ClassNotFoundException {
@@ -12,8 +12,8 @@ public class ClazzTest {
         System.out.println(x.getName());
         System.out.println(x.getSimpleName());
         System.out.println(x.getTypeName());
-        System.out.println(ClazzTest[].class);
-        System.out.println(Class.forName("[Lcom.test.clazz.ClazzTest;"));
+        System.out.println(ClassTest[].class);
+        System.out.println(Class.forName("[Lcom.test.clazz.ClassTest;"));
         System.out.println(x);
         System.out.println(int[].class);
 //        System.out.println(Reflection.getCallerClass());
