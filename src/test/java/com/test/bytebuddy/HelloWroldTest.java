@@ -6,7 +6,7 @@ import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.implementation.FixedValue;
 import net.bytebuddy.matcher.ElementMatchers;
 
-public class HelloWrodTest {
+public class HelloWroldTest {
 
     @Test
     public void test() throws IllegalAccessException, InstantiationException {

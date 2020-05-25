@@ -1,7 +1,5 @@
 package com.test.thread;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.regex.Pattern;
 
 import org.junit.Test;
@@ -29,7 +27,7 @@ public class DaemonThreadDemo {
     }
 
     @Test
-    public void DaemonThreadTest() throws InterruptedException {
+    public void daemonThreadTest() throws InterruptedException {
         Pattern pattern = Pattern.compile("^\\d{6}$");
         System.out.println(pattern.matcher("1234567").matches());
         Thread thread = new Thread(new MyDaemon());
