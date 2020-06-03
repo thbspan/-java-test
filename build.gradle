@@ -24,6 +24,7 @@ dependencies {
 
     // Java Object Layout，可以打印类的布局
     compile group: 'org.openjdk.jol', name: 'jol-core', version: '0.10'
+    compile group: 'com.google.guava', name: 'guava', version: '29.0-jre'
 }
 
 jar {

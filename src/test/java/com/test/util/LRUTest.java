@@ -2,8 +2,6 @@ package com.test.util;
 
 import org.junit.Test;
 
-import com.test.util.LRU;
-
 public class LRUTest {
 
     @Test
