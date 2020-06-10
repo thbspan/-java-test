@@ -13,6 +13,9 @@ import com.test.proxy.javassist.JavassistProxyCreator;
 
 public class ProxyCreatorTest {
 
+    /**
+     * jdk11 运行时添加 -Djdk.proxy.ProxyGenerator.saveGeneratedFiles=true 可以保存动态生成的代理类
+     */
     @Test
     public void testJdk() {
         UserService userService = new UserServiceImpl();

@@ -36,10 +36,20 @@ public class ClassLoaderTest {
      * 系统类加载器
      */
     @Test
-    public void testSystemClassLoader() {
-        // println sun.misc.Launcher$AppClassLoader@xxxx
+    public void testClassLoader() {
+        // jdk8 println sun.misc.Launcher$AppClassLoader@xxxx
+        //jdk11 println jdk.internal.loader.ClassLoaders$AppClassLoader@xxxx
         System.out.println(this.getClass().getClassLoader());
-        // println sun.misc.Launcher$AppClassLoader@xxxx
-        System.out.println(ClassLoader.getSystemClassLoader());
+        ClassLoader appClassLoader = ClassLoader.getSystemClassLoader();
+        // jdk8 println sun.misc.Launcher$AppClassLoader@xxxx
+        //jdk11 println jdk.internal.loader.ClassLoaders$AppClassLoader@xxxx
+        System.out.println(appClassLoader);
+        ClassLoader extensionClassLoader = appClassLoader.getParent();
+        // jdk8 println sun.misc.Launcher$ExtClassLoader@xxxx
+        //jdk11 println jdk.internal.loader.ClassLoaders$PlatformClassLoader@xxxx
+        System.out.println(extensionClassLoader);
+        // jdk8 println null
+        //jdk11 println null
+        System.out.println(extensionClassLoader.getParent());
     }
 }
