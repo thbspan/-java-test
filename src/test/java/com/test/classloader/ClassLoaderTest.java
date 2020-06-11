@@ -51,5 +51,6 @@ public class ClassLoaderTest {
         // jdk8 println null
         //jdk11 println null
         System.out.println(extensionClassLoader.getParent());
+        System.out.println(Object.class.getClassLoader());
     }
 }
