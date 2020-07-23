@@ -13,4 +13,12 @@ public class StringTokenizerTest {
             System.out.println(st.nextToken());
         }
     }
+
+    @Test
+    public void testTokenWithSpace() {
+        StringTokenizer st = new StringTokenizer("Hello World");
+        while (st.hasMoreTokens()) {
+            System.out.println(st.nextToken());
+        }
+    }
 }
