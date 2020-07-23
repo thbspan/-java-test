@@ -12,13 +12,13 @@ public class PatternFindAndReplaceTest {
     @Test
     public void test() {
         Map<String, String> replacements = new HashMap<>();
-        replacements.put("${env1}", "1");
-        replacements.put("${env2}", "2");
-        replacements.put("${env3}", "3");
+        replacements.put("env1", "1");
+        replacements.put("env2", "2");
+        replacements.put("env3", "3");
 
         String line = "${env4}sojods${env2}${env3}-${env1}";
 
-        Pattern pattern = Pattern.compile("(\\$\\{[^}]+\\})");
+        Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         StringBuilder builder = new StringBuilder();
         Matcher matcher = pattern.matcher(line);
         while (matcher.find()) {
