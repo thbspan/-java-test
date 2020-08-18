@@ -27,4 +27,9 @@ public class ClassTest {
     public void testSigners() {
         System.out.println(Arrays.toString(this.getClass().getSigners()));
     }
+
+    @Test
+    public void testClassLoad() {
+        new Child();
+    }
 }

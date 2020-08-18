@@ -15,8 +15,6 @@ public class NioSocketServer {
     public void start() {
         // 创建一个ServerSocketChannel对象
         try (ServerSocketChannel serverSocketChannel = SelectorProvider.provider().openServerSocketChannel()) {
-            // 绑定 8080端口
-            serverSocketChannel.socket().bind(new InetSocketAddress(8080));
             // 设置为非阻塞模式
             serverSocketChannel.configureBlocking(false);
 
@@ -25,6 +23,8 @@ public class NioSocketServer {
             // 注册 OP_ACCEPT 事件；若传入0，表示未注册任何事件
             serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 
+            // 绑定 8080端口
+            serverSocketChannel.socket().bind(new InetSocketAddress(8080));
             ServerHandler serverHandler = new ServerHandler(selector);
             System.out.println("Server start work");
             while (flag) {
@@ -43,7 +43,7 @@ public class NioSocketServer {
                     }
 
                     // 注意：Channel 大多数情况下是可写的，所以不需要专门去注册 SelectionKey.OP_WRITE 事件
-                    // 当写入失败时，可以尝试注册SelectionKey.OP_WRITE 事件
+                    // 当写入失败时，可以尝试注册 SelectionKey.OP_WRITE 事件
                     if (selectionKey.isAcceptable()) {
                         serverHandler.handleAccept(selectionKey);
                     } else if (selectionKey.isReadable()) {
