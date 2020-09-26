@@ -2,7 +2,7 @@ package com.test.proxy;
 
 import java.util.Arrays;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.test.proxy.cglib.CglibProxyCreator;
 import com.test.proxy.cglib.Hello;

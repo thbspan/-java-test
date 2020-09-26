@@ -3,7 +3,7 @@ package com.test.util;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class LinkedHashMapTest {
 

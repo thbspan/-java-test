@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicStampedReference;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ABATest {
     private static AtomicInteger atomicInt = new AtomicInteger(100);

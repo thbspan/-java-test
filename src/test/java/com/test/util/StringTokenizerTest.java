@@ -2,7 +2,7 @@ package com.test.util;
 
 import java.util.StringTokenizer;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class StringTokenizerTest {
 

@@ -3,7 +3,7 @@ package com.test.gc;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SoftReferenceTest {
 

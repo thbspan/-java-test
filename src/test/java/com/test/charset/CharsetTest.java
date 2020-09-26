@@ -2,7 +2,7 @@ package com.test.charset;
 
 import java.nio.charset.Charset;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class CharsetTest {
 

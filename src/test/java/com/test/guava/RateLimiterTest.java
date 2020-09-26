@@ -2,7 +2,7 @@ package com.test.guava;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.google.common.util.concurrent.RateLimiter;
 

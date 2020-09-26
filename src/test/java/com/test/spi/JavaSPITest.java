@@ -2,7 +2,7 @@ package com.test.spi;
 
 import java.util.ServiceLoader;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class JavaSPITest {
 

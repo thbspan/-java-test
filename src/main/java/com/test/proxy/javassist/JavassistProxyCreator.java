@@ -1,5 +1,7 @@
 package com.test.proxy.javassist;
 
+import java.lang.reflect.InvocationTargetException;
+
 import com.test.proxy.ProxyCreator;
 
 import javassist.util.proxy.MethodFilter;
@@ -27,9 +29,9 @@ public class JavassistProxyCreator<T extends MethodFilter & MethodHandler> imple
         Class<?> proxyClass = proxyFactory.createClass();
         Object instance = null;
         try {
-            instance = proxyClass.newInstance();
+            instance = proxyClass.getDeclaredConstructor().newInstance();
             ((ProxyObject) instance).setHandler(handler);
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
 

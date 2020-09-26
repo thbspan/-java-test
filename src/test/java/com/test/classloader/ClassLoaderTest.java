@@ -2,7 +2,7 @@ package com.test.classloader;
 
 import java.net.URL;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 // java 8
 //import sun.misc.Launcher;
 

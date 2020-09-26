@@ -4,7 +4,7 @@ import java.lang.ref.PhantomReference;
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class PhantomReferenceTest {
 

@@ -2,7 +2,7 @@ package com.test.thread;
 
 import java.util.regex.Pattern;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class DaemonThreadDemo {
     public static class MyDaemon implements Runnable {

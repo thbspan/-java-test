@@ -2,7 +2,7 @@ package com.test.concurrent.locks;
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ReentrantReadWriteLockTest {
 

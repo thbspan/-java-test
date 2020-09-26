@@ -2,17 +2,17 @@ package com.test.concurrent.atomic;
 
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class AtomicReferenceFieldUpdaterTest {
 
     @Test
     public void test() {
         Cat cat = new Cat();
-        Assert.assertEquals("cat1", cat.name);
+        Assertions.assertEquals("cat1", cat.name);
         Cat.updater.compareAndSet(cat, cat.name, "cat2");
-        Assert.assertEquals("cat2", cat.name);
+        Assertions.assertEquals("cat2", cat.name);
     }
 
     static class Cat {

@@ -1,6 +1,8 @@
 package com.test.bytebuddy;
 
-import org.junit.Test;
+import java.lang.reflect.InvocationTargetException;
+
+import org.junit.jupiter.api.Test;
 
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.implementation.FixedValue;
@@ -9,7 +11,7 @@ import net.bytebuddy.matcher.ElementMatchers;
 public class HelloWroldTest {
 
     @Test
-    public void test() throws IllegalAccessException, InstantiationException {
+    public void test() throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         Class<?> dynamicType = new ByteBuddy()
                 .subclass(Object.class)
                 .method(ElementMatchers.named("toString"))
@@ -18,7 +20,7 @@ public class HelloWroldTest {
                 .load(Thread.currentThread().getContextClassLoader())
                 .getLoaded();
         System.out.println(dynamicType);
-        String str = dynamicType.newInstance().toString();
+        String str = dynamicType.getDeclaredConstructor().newInstance().toString();
 
         System.out.println(str);
     }

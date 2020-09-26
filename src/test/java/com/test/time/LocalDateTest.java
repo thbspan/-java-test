@@ -2,7 +2,7 @@ package com.test.time;
 
 import java.time.LocalDate;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class LocalDateTest {
 

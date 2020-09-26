@@ -12,13 +12,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class CompletableFutureTest {
 
@@ -85,13 +85,13 @@ public class CompletableFutureTest {
         StringBuilder result = new StringBuilder();
         CompletableFuture.completedFuture("thenAccept message")
                 .thenAccept(result::append);
-        assertTrue("Result was empty", result.length() > 0);
+        assertTrue(result.length() > 0, "Result was empty");
 
         // async
         CompletableFuture<Void> cf = CompletableFuture.completedFuture("thenAcceptAsync message")
                 .thenAcceptAsync(result::append);
         cf.join();
-        assertTrue("Result was empty", result.length() > 0);
+        assertTrue(result.length() > 0, "Result was empty");
     }
 
     @Test
@@ -103,7 +103,7 @@ public class CompletableFutureTest {
 
         cf.completeExceptionally(new RuntimeException("completed exceptionally"));
 
-        assertTrue("Was not completed exceptionally", cf.isCompletedExceptionally());
+        assertTrue(cf.isCompletedExceptionally(), "Was not completed exceptionally");
         try {
             cf.join();
             fail("Should have thrown an exception");
@@ -139,7 +139,7 @@ public class CompletableFutureTest {
         // 不能去掉，thenApplyAsync 前面已经异步了
         cf.join();
         System.out.println(result);
-        assertTrue("Result was empty", result.toString().endsWith("acceptEither"));
+        assertTrue(result.toString().endsWith("acceptEither"), "Result was empty");
     }
 
     @Test
@@ -211,7 +211,7 @@ public class CompletableFutureTest {
             }
         });
         System.out.println(result);
-        assertTrue("Result was empty", result.length() > 0);
+        assertTrue(result.length() > 0, "Result was empty");
     }
 
     @Test
@@ -230,7 +230,7 @@ public class CompletableFutureTest {
 //        allOf.join();
         System.out.println(allOf.isDone());
         System.out.println(result);
-        assertTrue("Result was empty", result.length() > 0);
+        assertTrue(result.length() > 0, "Result was empty");
     }
 
     private boolean isUpperCase(String res) {

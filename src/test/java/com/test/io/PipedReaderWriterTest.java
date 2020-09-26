@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.PipedReader;
 import java.io.PipedWriter;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class PipedReaderWriterTest {
 

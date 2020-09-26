@@ -1,6 +1,6 @@
 package com.test.cglib;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.cglib.core.KeyFactory;
 
 public class KeyFactoryTest {
