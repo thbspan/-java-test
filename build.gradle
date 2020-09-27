@@ -35,3 +35,7 @@ jar {
         attributes 'Manifest-Version': 1.0, 'Premain-Class': 'com.test.bytebuddy.agent.time.TimerAgent'
     }
 }
+
+test {
+    useJUnitPlatform()
+}
