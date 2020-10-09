@@ -11,12 +11,12 @@
     <node x="0.0" y="160.0">org.mockito.internal.handler.InvocationNotifierHandler</node>
     <node x="0.0" y="545.0">org.mockito.internal.creation.cglib.ClassImposterizer</node>
     <node x="0.0" y="470.0">org.mockito.internal.creation.MockSettingsImpl</node>
-    <node x="426.0" y="470.0">org.mockito.Mockito</node>
     <node x="239.0" y="390.0">org.mockito.plugins.MockMaker</node>
+    <node x="426.0" y="470.0">org.mockito.Mockito</node>
     <node x="406.0" y="545.0">org.mockito.internal.util.MockUtil</node>
     <node x="218.0" y="315.0">org.mockito.internal.progress.ThreadSafeMockingProgress</node>
-    <node x="475.99999999999994" y="160.0">org.mockito.internal.handler.MockHandlerImpl</node>
     <node x="281.375" y="80.0">org.mockito.internal.InternalMockHandler</node>
+    <node x="475.99999999999994" y="160.0">org.mockito.internal.handler.MockHandlerImpl</node>
     <node x="266.0" y="160.0">org.mockito.internal.handler.NullResultGuardian</node>
     <node x="144.25" y="0.0">org.mockito.invocation.MockHandler</node>
     <node x="219.0" y="470.0">org.mockito.internal.creation.cglib.CglibMockMaker</node>
@@ -49,15 +49,15 @@
       <point x="0.0" y="-15.0" />
       <point x="0.0" y="15.0" />
     </edge>
+    <edge source="org.mockito.internal.creation.cglib.CglibMockMaker" target="org.mockito.plugins.MockMaker">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
     <edge source="org.mockito.internal.handler.InvocationNotifierHandler" target="org.mockito.internal.InternalMockHandler">
       <point x="61.5" y="-15.0" />
       <point x="184.5" y="135.0" />
       <point x="314.375" y="135.0" />
       <point x="-66.0" y="15.0" />
-    </edge>
-    <edge source="org.mockito.internal.creation.cglib.CglibMockMaker" target="org.mockito.plugins.MockMaker">
-      <point x="0.0" y="-15.0" />
-      <point x="0.0" y="15.0" />
     </edge>
     <edge source="org.mockito.internal.handler.MockHandlerImpl" target="org.mockito.internal.InternalMockHandler">
       <point x="0.0" y="-15.0" />
@@ -65,20 +65,20 @@
       <point x="446.375" y="135.0" />
       <point x="66.0" y="15.0" />
     </edge>
-    <edge source="org.mockito.internal.progress.ThreadSafeMockingProgress" target="org.mockito.internal.progress.MockingProgress">
-      <point x="0.0" y="-15.0" />
-      <point x="341.0" y="290.0" />
-      <point x="261.5" y="290.0" />
-      <point x="41.5" y="15.0" />
-    </edge>
     <edge source="org.mockito.internal.InternalMockHandler" target="org.mockito.invocation.MockHandler">
       <point x="0.0" y="-15.0" />
       <point x="380.375" y="55.0" />
       <point x="244.75" y="55.0" />
       <point x="33.5" y="15.0" />
     </edge>
+    <edge source="org.mockito.internal.progress.ThreadSafeMockingProgress" target="org.mockito.internal.progress.MockingProgress">
+      <point x="0.0" y="-15.0" />
+      <point x="341.0" y="290.0" />
+      <point x="261.5" y="290.0" />
+      <point x="41.5" y="15.0" />
+    </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.9222042139384117" x="313.5" y="298.5" />
+  <settings layout="Hierarchic Group" zoom="1.0" x="314.5" y="287.0" />
   <SelectedNodes>
     <node>org.mockito.Mockito</node>
   </SelectedNodes>
