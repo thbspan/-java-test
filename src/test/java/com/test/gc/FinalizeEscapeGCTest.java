@@ -36,8 +36,9 @@ public class FinalizeEscapeGCTest {
 
     private static void saveSelf() throws InterruptedException {
         SAVE_HOOK = null;
+        System.gc();
         // 因为Finalizer方法优先级很低， 暂停一会儿， 以等待它
-        Thread.sleep(1000L);
+        Thread.sleep(500L);
         if (SAVE_HOOK != null) {
             SAVE_HOOK.isAlive();
         } else {
