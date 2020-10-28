@@ -28,7 +28,6 @@ public class LRUCache<K, V> {
 
         if (entry == null) {
             if (cache.size() >= cacheSize) {
-                cache.remove(key);
                 removeLast();
             }
             entry = new Entry<>();
@@ -41,7 +40,10 @@ public class LRUCache<K, V> {
 
     public V get(K key) {
         Entry<K, V> entry = getEntry(key);
-        if (entry == null) return null;
+        if (entry == null) {
+            return null;
+        }
+
         moveToFirst(entry);
         return entry.value;
     }
@@ -65,8 +67,26 @@ public class LRUCache<K, V> {
         cache.remove(key);
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder().append('{');
+        Entry<K, V> tmp = first;
+        while (true) {
+            builder.append(tmp.key).append('=').append(tmp.value);
+            tmp = tmp.next;
+            if (tmp != null) {
+                builder.append(',').append(' ');
+            } else {
+                break;
+            }
+        }
+        builder.append('}');
+        return builder.toString();
+    }
+
     private void removeLast() {
         if (last != null) {
+            cache.remove(last.key);
             last = last.pre;
             if (last == null) {
                 first = null;
