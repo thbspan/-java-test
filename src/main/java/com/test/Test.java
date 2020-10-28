@@ -21,7 +21,7 @@ public class Test {
 
         @Override
         public void run() {
-            while (true) {
+            do {
                 try {
                     headBarrier.await();
                 } catch (InterruptedException | BrokenBarrierException e) {
@@ -36,10 +36,7 @@ public class Test {
                     e.printStackTrace();
                 }
 
-                if (index.get() >= max) {
-                    break;
-                }
-            }
+            } while (index.get() < max);
         }
     }
 
