@@ -12,11 +12,12 @@ public class ConditionTest {
     public static void main(String[] args) {
         Queue<String> queue = new LinkedList<>();
         Lock lock = new ReentrantLock();
-        Condition condition = lock.newCondition();
+        Condition putCondition = lock.newCondition();
+        Condition takeCondition = lock.newCondition();
         int maxSize = 10;
 
-        Producer producer = new Producer(queue, maxSize, lock, condition);
-        Consumer consumer = new Consumer(queue, maxSize, lock, condition);
+        Producer producer = new Producer(queue, maxSize, lock, putCondition, takeCondition);
+        Consumer consumer = new Consumer(queue, maxSize, lock, putCondition, takeCondition);
 
         new Thread(producer).start();
         new Thread(consumer).start();
@@ -24,16 +25,18 @@ public class ConditionTest {
 }
 
 class Producer implements Runnable {
-    private Queue<String> queue;
-    private int maxSize;
-    private Lock lock;
-    private Condition condition;
+    private final Queue<String> queue;
+    private final int maxSize;
+    private final Lock lock;
+    private final Condition putCondition;
+    private final Condition takeCondition;
 
-    public Producer(Queue<String> queue, int maxSize, Lock lock, Condition condition) {
+    public Producer(Queue<String> queue, int maxSize, Lock lock, Condition putCondition, Condition takeCondition) {
         this.queue = queue;
         this.maxSize = maxSize;
         this.lock = lock;
-        this.condition = condition;
+        this.putCondition = putCondition;
+        this.takeCondition = takeCondition;
     }
 
     @Override
@@ -46,7 +49,7 @@ class Producer implements Runnable {
                 while (queue.size() == maxSize) {
                     System.out.println("The producer queue is full, please wait first");
                     try {
-                        condition.await();
+                        putCondition.await();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -58,7 +61,7 @@ class Producer implements Runnable {
                 }
                 System.out.println("produce message：" + i);
                 queue.add("Msg" + i);
-                condition.signal();
+                takeCondition.signal();
             } finally {
                 lock.unlock();
             }
@@ -67,16 +70,18 @@ class Producer implements Runnable {
 }
 
 class Consumer implements Runnable {
-    private Queue<String> queue;
-    private int maxSize;
-    private Lock lock;
-    private Condition condition;
+    private final Queue<String> queue;
+    private final int maxSize;
+    private final Lock lock;
+    private final Condition putCondition;
+    private final Condition takeCondition;
 
-    public Consumer(Queue<String> queue, int maxSize, Lock lock, Condition condition) {
+    public Consumer(Queue<String> queue, int maxSize, Lock lock, Condition putCondition, Condition takeCondition) {
         this.queue = queue;
         this.maxSize = maxSize;
         this.lock = lock;
-        this.condition = condition;
+        this.putCondition = putCondition;
+        this.takeCondition = takeCondition;
     }
 
     @Override
@@ -87,7 +92,7 @@ class Consumer implements Runnable {
                 while (queue.isEmpty()) {
                     System.out.println("The consumer queue is empty, please wait first");
                     try {
-                        condition.await();
+                        takeCondition.await();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -98,7 +103,7 @@ class Consumer implements Runnable {
                     e.printStackTrace();
                 }
                 System.out.println("consumed message：" + queue.remove());
-                condition.signal();
+                putCondition.signal();
             } finally {
                 lock.unlock();
             }
