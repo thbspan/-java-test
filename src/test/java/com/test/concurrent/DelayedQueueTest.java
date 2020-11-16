@@ -1,13 +1,13 @@
 package com.test.concurrent;
 
-import org.junit.jupiter.api.Test;
-
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
+
+import org.junit.jupiter.api.Test;
 
 public class DelayedQueueTest {
 
@@ -48,14 +48,18 @@ class Item implements Delayed {
     }
 
     @Override
-    public int compareTo(Delayed o) {
-        Item item = (Item) o;
-        long diff = this.time - item.time;
-        if (diff <= 0) {// 改成>=会造成问题
-            return -1;
-        } else {
-            return 1;
+    public int compareTo(Delayed other) {
+        if (other == this) {
+            return 0;
         }
+        long diff;
+        if (other instanceof Item) {
+            Item item = (Item) other;
+            diff = this.time - item.time;
+        } else {
+            diff = (getDelay(TimeUnit.NANOSECONDS) - other.getDelay(TimeUnit.NANOSECONDS));
+        }
+        return (diff == 0) ? 0 : ((diff < 0) ? -1 : 1);
     }
 
     @Override
