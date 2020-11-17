@@ -54,4 +54,16 @@ public class HeapSortTest {
         sort(arr);
         System.out.println(Arrays.toString(arr));
     }
+
+    @Test
+    public void testMaxHeap() {
+        MaxHeap maxHeap = new MaxHeap();
+        int[] arr = {4,8,5,3,13,11,9,2,7,1};
+        for (int i : arr) {
+            maxHeap.insert(i);
+        }
+        for (int i = 0; i < arr.length; i++) {
+            System.out.println(maxHeap.delete(0));
+        }
+    }
 }
