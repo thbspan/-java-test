@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Base128 {
+    /**
+     * 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\xb5\xb6\xb7\xbc\xbd\xbe\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff
+     */
     private static final char[] SYMBOL_TABLE = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzµ¶·¼½¾ÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÑÒÓÔÕÖ×ØÙÚÛÜÝÞßáâãäåæçèéêëìíîïñòóôõö÷øùúûüýþÿ".toCharArray();
 
     private static final Map<Character, Integer> INDEX_TABLE = new HashMap<>();
