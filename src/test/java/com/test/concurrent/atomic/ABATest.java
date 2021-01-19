@@ -7,8 +7,8 @@ import java.util.concurrent.atomic.AtomicStampedReference;
 import org.junit.jupiter.api.Test;
 
 public class ABATest {
-    private static AtomicInteger atomicInt = new AtomicInteger(100);
-    private static AtomicStampedReference<Integer> atomicStampedRef = new AtomicStampedReference<>(100, 0);
+    private static final AtomicInteger atomicInt = new AtomicInteger(100);
+    private static final AtomicStampedReference<Integer> atomicStampedRef = new AtomicStampedReference<>(100, 0);
 
     @Test
     public void testABA() throws InterruptedException {
@@ -38,6 +38,7 @@ public class ABATest {
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
             // 等待1s后获取stamp
             int stamp = atomicStampedRef.getStamp();

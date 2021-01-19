@@ -5,18 +5,18 @@
   <nodes>
     <node x="137.0" y="235.0">org.mockito.internal.progress.MockingProgress</node>
     <node x="422.0" y="390.0">org.mockito.Matchers</node>
-    <node x="227.0" y="545.0">org.mockito.internal.MockitoCore</node>
     <node x="16.0" y="390.0">org.mockito.MockSettings</node>
-    <node x="0.0" y="315.0">org.mockito.internal.progress.MockingProgressImpl</node>
+    <node x="227.0" y="545.0">org.mockito.internal.MockitoCore</node>
     <node x="0.0" y="160.0">org.mockito.internal.handler.InvocationNotifierHandler</node>
-    <node x="0.0" y="545.0">org.mockito.internal.creation.cglib.ClassImposterizer</node>
+    <node x="0.0" y="315.0">org.mockito.internal.progress.MockingProgressImpl</node>
     <node x="0.0" y="470.0">org.mockito.internal.creation.MockSettingsImpl</node>
+    <node x="0.0" y="545.0">org.mockito.internal.creation.cglib.ClassImposterizer</node>
     <node x="239.0" y="390.0">org.mockito.plugins.MockMaker</node>
     <node x="426.0" y="470.0">org.mockito.Mockito</node>
     <node x="406.0" y="545.0">org.mockito.internal.util.MockUtil</node>
     <node x="218.0" y="315.0">org.mockito.internal.progress.ThreadSafeMockingProgress</node>
-    <node x="281.375" y="80.0">org.mockito.internal.InternalMockHandler</node>
     <node x="475.99999999999994" y="160.0">org.mockito.internal.handler.MockHandlerImpl</node>
+    <node x="281.375" y="80.0">org.mockito.internal.InternalMockHandler</node>
     <node x="266.0" y="160.0">org.mockito.internal.handler.NullResultGuardian</node>
     <node x="144.25" y="0.0">org.mockito.invocation.MockHandler</node>
     <node x="219.0" y="470.0">org.mockito.internal.creation.cglib.CglibMockMaker</node>
@@ -78,7 +78,7 @@
       <point x="41.5" y="15.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0" x="314.5" y="287.0" />
+  <settings layout="Hierarchic Group" zoom="1.0" x="321.0" y="287.5" />
   <SelectedNodes>
     <node>org.mockito.Mockito</node>
   </SelectedNodes>

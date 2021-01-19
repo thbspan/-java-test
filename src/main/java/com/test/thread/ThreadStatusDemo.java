@@ -40,7 +40,7 @@ public class ThreadStatusDemo {
 
     static class BlockingClass {
 
-        private ReentrantLock lock = new ReentrantLock();
+        private final ReentrantLock lock = new ReentrantLock();
 
         public void test() {
             synchronized (this) {
