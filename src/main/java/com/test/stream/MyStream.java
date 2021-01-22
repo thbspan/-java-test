@@ -38,13 +38,17 @@ public interface MyStream<T> {
 
     void forEach(Consumer<? super T> action);
 
-    <R> R reduce(R initVal, BiFunction<R, R, T> accumulator);
+    <R> R reduce(R initVal, BiFunction<R, T, R> accumulator);
 
     <R, A> R collect(Collector<T, A, R> collector);
 
     T max(Comparator<T> comparator);
 
     T min(Comparator<T> comparator);
+
+    int count();
+
+    boolean anyMatch(Predicate<? super T> predicate);
 
     boolean isEmptyStream();
     static <T> MyStream<T> empty() {

@@ -1,6 +1,8 @@
 package com.test.stream;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -36,5 +38,18 @@ public class IntegerStreamGeneratorTest {
         stream.distinct()
                 .forEach(System.out::println);
 
+    }
+
+    @Test
+    public void testCollector() {
+        MyStream<Integer> integerStream = IntegerStreamGenerator.getIntegerStream(10, 100);
+        List<Integer> integers = integerStream.limit(50)
+                .collect(Collectors.toList());
+        System.out.println(integers);
+    }
+
+    @Test
+    public void testCount() {
+        System.out.println(IntegerStreamGenerator.getIntegerStream(10, 100_0000).count());
     }
 }

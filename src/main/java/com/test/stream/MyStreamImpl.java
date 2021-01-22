@@ -138,7 +138,7 @@ public class MyStreamImpl<T> implements MyStream<T> {
         MyStreamImpl<T> stream = (MyStreamImpl<T>) myStream;
         return new Builder<T>()
                 .head(stream.head)
-                .nextItemEvalProcess(new NextItemEvalProcess<>(() -> limit(num, stream.eval())))
+                .nextItemEvalProcess(new NextItemEvalProcess<>(() -> limit(num - 1, stream.eval())))
                 .build();
     }
 
@@ -203,23 +203,103 @@ public class MyStreamImpl<T> implements MyStream<T> {
     }
 
     @Override
-    public <R> R reduce(R initVal, BiFunction<R, R, T> accumulator) {
-        return null;
+    public <R> R reduce(R initVal, BiFunction<R, T, R> accumulator) {
+        return reduce(initVal, accumulator, this.eval());
+    }
+
+    private <R> R reduce(R initVal, BiFunction<R, T, R> accumulator, MyStream<T> myStream) {
+        R result = initVal;
+        while (!myStream.isEmptyStream()) {
+            MyStreamImpl<T> stream = (MyStreamImpl<T>) myStream;
+            result = accumulator.apply(result, stream.head);
+            myStream = stream.eval();
+        }
+        return result;
     }
 
     @Override
     public <R, A> R collect(Collector<T, A, R> collector) {
-        return null;
+        A result = collect(collector, this.eval());
+        return collector.finisher().apply(result);
+    }
+
+    private <A, R> A collect(Collector<T, A, R> collector, MyStream<T> myStream) {
+        A result = collector.supplier().get();
+        while (!myStream.isEmptyStream()) {
+            MyStreamImpl<T> stream = (MyStreamImpl<T>) myStream;
+            T head = stream.head;
+            collector.accumulator().accept(result, head);
+            myStream = stream.eval();
+        }
+        return result;
     }
 
     @Override
     public T max(Comparator<T> comparator) {
-        return null;
+        MyStream<T> myStream = this.eval();
+        if (myStream.isEmptyStream()) {
+            return null;
+        } else {
+            MyStreamImpl<T> stream = (MyStreamImpl<T>) myStream;
+            T max = stream.head;
+            do {
+                stream = ((MyStreamImpl<T>) stream.eval());
+
+                if (stream.isEmptyStream()) {
+                    break;
+                }
+                T head = stream.head;
+                if (comparator.compare(max, head) < 0) {
+                    max = head;
+                }
+            } while (true);
+            return max;
+        }
     }
 
     @Override
     public T min(Comparator<T> comparator) {
-        return null;
+        MyStream<T> myStream = this.eval();
+        if (myStream.isEmptyStream()) {
+            return null;
+        } else {
+            MyStreamImpl<T> stream = (MyStreamImpl<T>) myStream;
+            T min = stream.head;
+            do {
+                stream = ((MyStreamImpl<T>) stream.eval());
+                if (stream.isEmptyStream()) {
+                    break;
+                }
+                T head = stream.head;
+                if (comparator.compare(min, head) > 0) {
+                    min = head;
+                }
+            } while (true);
+            return min;
+        }
+    }
+
+    @Override
+    public int count() {
+        MyStreamImpl<T> stream = (MyStreamImpl<T>) this.eval();
+        int count = 0;
+        while (!stream.isEmptyStream()) {
+            count++;
+            stream = (MyStreamImpl<T>) stream.eval();
+        }
+        return count;
+    }
+
+    @Override
+    public boolean anyMatch(Predicate<? super T> predicate) {
+        MyStreamImpl<T> stream = ((MyStreamImpl<T>) this.eval());
+        while (!stream.isEmptyStream()) {
+            if (predicate.test(stream.head)) {
+                return true;
+            }
+            stream = ((MyStreamImpl<T>) stream.eval());
+        }
+        return false;
     }
 
     /**
