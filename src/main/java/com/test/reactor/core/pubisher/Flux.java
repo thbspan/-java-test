@@ -16,6 +16,10 @@ public abstract class Flux<T> implements Flow.Publisher<T> {
         return new FluxFilter<>(this, predicate);
     }
 
+    public <V> Flux<V> flatMap(Function<? super T, ? extends Flow.Publisher<? extends V>> mapper) {
+         return new FluxFlatMap<>(this, mapper);
+    }
+
     @SafeVarargs
     public static <T> Flux<T> just(T... data) {
         return new FluxArray<>(data);
