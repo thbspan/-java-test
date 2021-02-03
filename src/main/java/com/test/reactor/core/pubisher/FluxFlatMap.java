@@ -21,6 +21,10 @@ class FluxFlatMap<T, V> extends Flux<T> {
         final Flux<? extends V> source;
         final Function<? super V, ? extends Flow.Publisher<? extends T>> mapper;
         final Flow.Subscriber<? super T> subscriber;
+        Flow.Subscription subscription;
+        int index;
+        boolean done;
+        long limit;
 
         public FlatMapSubscriber(Flux<? extends V> source, Function<? super V, ? extends Flow.Publisher<? extends T>> mapper, Flow.Subscriber<? super T> subscriber) {
             this.source = source;
@@ -30,59 +34,72 @@ class FluxFlatMap<T, V> extends Flux<T> {
 
         @Override
         public void onSubscribe(Flow.Subscription subscription) {
-            subscriber.onSubscribe(new FlatMapSubscription<>(source, subscriber, subscription));
+            this.subscription = subscription;
+            // 继续向上传播
+            subscriber.onSubscribe(this);
         }
 
         @Override
         public void onNext(V item) {
+            if (done) {
+                return;
+            }
+            Flow.Publisher<? extends T> publisher = mapper.apply(item);
+            publisher.subscribe(new Flow.Subscriber<T>() {
+                @Override
+                public void onSubscribe(Flow.Subscription subscription) {
+                    long n;
+                    if ((n = limit - index) > 0) {
+                        subscription.request(n);
+                    } else {
+                        done = true;
+                    }
+                }
 
+                @Override
+                public void onNext(T item) {
+                    subscriber.onNext(item);
+                    index++;
+                }
+
+                @Override
+                public void onError(Throwable throwable) {
+                    subscriber.onError(throwable);
+                }
+
+                @Override
+                public void onComplete() {
+                    // 由外层循环触发完成事件，这里内部循环的完成事件忽略
+                }
+            });
         }
 
         @Override
         public void onError(Throwable throwable) {
-
+            if (done) {
+                return;
+            }
+            done = true;
+            subscriber.onError(throwable);
         }
 
         @Override
         public void onComplete() {
-
-        }
-
-        @Override
-        public void request(long n) {
-
-        }
-
-        @Override
-        public void cancel() {
-
-        }
-    }
-
-    static final class FlatMapSubscription<T, V> implements Flow.Subscription {
-        final Flux<? extends V> source;
-        final Flow.Subscriber<? super T> subscriber;
-        final Flow.Subscription subscription;
-        int index;
-        boolean canceled;
-
-        FlatMapSubscription(Flux<? extends V> source, Flow.Subscriber<? super T> subscriber, Flow.Subscription subscription) {
-            this.source = source;
-            this.subscriber = subscriber;
-            this.subscription = subscription;
-        }
-
-        @Override
-        public void request(long n) {
-            if (canceled) {
+            if (done) {
                 return;
             }
+            done = true;
+            subscriber.onComplete();
+        }
+
+        @Override
+        public void request(long n) {
+            this.limit = n;
             subscription.request(n);
         }
 
         @Override
         public void cancel() {
-            canceled = true;
             subscription.cancel();
         }
     }

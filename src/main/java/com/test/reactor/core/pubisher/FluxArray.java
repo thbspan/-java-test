@@ -11,7 +11,11 @@ class FluxArray<T> extends Flux<T> {
 
     @Override
     public void subscribe(Flow.Subscriber<? super T> subscriber) {
-        subscriber.onSubscribe(new ArraySubscription<>(subscriber, array));
+        try {
+            subscriber.onSubscribe(new ArraySubscription<>(subscriber, array));
+        } catch (Exception e) {
+            subscriber.onError(e);
+        }
     }
 
     static final class ArraySubscription<T> implements Flow.Subscription {
