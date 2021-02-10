@@ -42,6 +42,18 @@ public class CompletableFutureTest {
     }
 
     @Test
+    public void testWhenComplete() {
+        CompletableFuture<Void> cf = CompletableFuture.runAsync(() -> {
+            assertTrue(Thread.currentThread().isDaemon());
+            randomSleep();
+        });
+        cf.whenComplete((v, e) -> {
+            System.out.println("whenComplete");
+        });
+        System.out.println("done");
+    }
+
+    @Test
     public void testThenApplyOrAsync() {
         CompletableFuture<String> cf = CompletableFuture.completedFuture("message").thenApply(s -> {
             assertFalse(Thread.currentThread().isDaemon());
