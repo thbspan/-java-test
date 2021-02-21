@@ -19,15 +19,15 @@ public class ServerHandler {
 
 
     public void handleAccept(SelectionKey selectionKey) {
-        // 获取channel
         try {
+            // 获取channel
             SocketChannel socketChannel = ((ServerSocketChannel) selectionKey.channel()).accept();
             // 设置非阻塞
             socketChannel.configureBlocking(false);
             // 注册读取事件
             // socketChannel.register(selectionKey.selector(), SelectionKey.OP_READ, ByteBuffer.allocate(bufferSize));
             socketChannel.register(selector, SelectionKey.OP_READ);
-            System.out.println("建立请求");
+            System.out.println("server handle client connect event");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -38,29 +38,35 @@ public class ServerHandler {
         SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
         // ByteBuffer buffer = (ByteBuffer) selectionKey.attachment();
         ByteBuffer buffer = ByteBuffer.allocate(bufferSize);
-
+        System.out.println("handle read event");
         String receivedMsg = null;
         try {
             if (socketChannel.read(buffer) == -1) {
-                // 没有读到内容
-                socketChannel.shutdownOutput();
-                socketChannel.shutdownInput();
-                socketChannel.close();
-                System.out.println("断开连接");
+                // 连接已经断开了，重新连接
+                System.out.println("断开 Channel");
+                socketChannel.register(selector, 0);
             } else {
-                // 讲buffer改为读取状态
+                // 将buffer改为读取状态
                 buffer.flip();
                 receivedMsg = StandardCharsets.UTF_8.newDecoder().decode(buffer).toString();
-                buffer.clear();
-                buffer.put(("received string:" + receivedMsg).getBytes(StandardCharsets.UTF_8));
-                // 读取模式
-                buffer.flip();
-                // 注册写入事件
-                SelectionKey key = socketChannel.register(selector, SelectionKey.OP_WRITE);
-                // 在selector上附加要写入的内容，下次写入
-                // System.out.println("key equals:" + (key == selectionKey)); //true
-                key.attach(buffer);
-                // 或者 socketChannel.register(selector, SelectionKey.OP_WRITE, buffer);
+                if ("bye".equals(receivedMsg)) {
+                    // 没有读到内容
+                    socketChannel.shutdownOutput();
+                    socketChannel.shutdownInput();
+                    socketChannel.close();
+                    System.out.println("断开连接");
+                } else {
+                    buffer.clear();
+                    buffer.put(("received string:" + receivedMsg).getBytes(StandardCharsets.UTF_8));
+                    // 读取模式
+                    buffer.flip();
+                    // 注册写入事件
+                    SelectionKey key = socketChannel.register(selector, SelectionKey.OP_WRITE);
+                    // 在selector上附加要写入的内容，下次写入
+                    // System.out.println("key equals:" + (key == selectionKey)); //true
+                    key.attach(buffer);
+                    // 或者 socketChannel.register(selector, SelectionKey.OP_WRITE, buffer);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

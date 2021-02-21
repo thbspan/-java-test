@@ -18,44 +18,55 @@ public class NioSocketServer {
             // 设置为非阻塞模式
             serverSocketChannel.configureBlocking(false);
 
-            // 为serverSocketChannel注册selector
+            // 创建Selector
             Selector selector = Selector.open();
-            // 注册 OP_ACCEPT 事件；若传入0，表示未注册任何事件
+            // 为serverSocketChannel注册selector，注册 OP_ACCEPT 事件；若传入0，表示未注册任何事件
             serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 
             // 绑定 8080端口
-            serverSocketChannel.socket().bind(new InetSocketAddress(8080));
-            ServerHandler serverHandler = new ServerHandler(selector);
-            System.out.println("Server start work");
-            while (flag) {
-                System.out.println("server handler request");
-                int selectNums = selector.select();
-                if (selectNums == 0) {
-                    continue;
-                }
-                Iterator<SelectionKey> keyIterator = selector.selectedKeys().iterator();
-                while (keyIterator.hasNext()) {
-                    SelectionKey selectionKey = keyIterator.next();
-                    // 移除需要处理的KEY
-                    keyIterator.remove();
-                    if (!selectionKey.isValid()) {
-                        continue;
-                    }
+            serverSocketChannel.socket().bind(new InetSocketAddress(9999));
 
-                    // 注意：Channel 大多数情况下是可写的，所以不需要专门去注册 SelectionKey.OP_WRITE 事件
-                    // 当写入失败时，可以尝试注册 SelectionKey.OP_WRITE 事件
-                    if (selectionKey.isAcceptable()) {
-                        serverHandler.handleAccept(selectionKey);
-                    } else if (selectionKey.isReadable()) {
-                        serverHandler.handlerRead(selectionKey);
-                    } else if (selectionKey.isWritable()) {
-                        serverHandler.handlerWrite(selectionKey);
-                    }
-                }
-            }
+            System.out.println("Server start work");
+            handleKeys(selector);
             System.out.println("Server end work");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void handleKeys(Selector selector) throws IOException {
+        ServerHandler serverHandler = new ServerHandler(selector);
+        System.out.println("server handler request");
+        while (flag) {
+            // 通过selector选择channel；每30s阻塞等待就绪的IO事件
+            int selectNums = selector.select(30 * 1000L);
+            if (selectNums == 0) {
+                continue;
+            }
+            Iterator<SelectionKey> keyIterator = selector.selectedKeys().iterator();
+            while (keyIterator.hasNext()) {
+                SelectionKey selectionKey = keyIterator.next();
+                // 移除需要处理的KEY
+                keyIterator.remove();
+                if (!selectionKey.isValid()) {
+                    // 忽略无效的selectionKey
+                    continue;
+                }
+
+                int readyOps = selectionKey.readyOps();
+                // 注意：Channel 大多数情况下是可写的，所以不需要专门去注册 SelectionKey.OP_WRITE 事件
+                // 当写入失败时，可以尝试注册 SelectionKey.OP_WRITE 事件
+                if ((readyOps & SelectionKey.OP_ACCEPT) != 0) {
+                    // 连接就绪事件，也就是客户端请求建立连接
+                    serverHandler.handleAccept(selectionKey);
+                }
+                if ((readyOps & SelectionKey.OP_READ) != 0) {
+                    serverHandler.handlerRead(selectionKey);
+                }
+                if ((readyOps & SelectionKey.OP_WRITE) != 0) {
+                    serverHandler.handlerWrite(selectionKey);
+                }
+            }
         }
     }
 
@@ -64,6 +75,7 @@ public class NioSocketServer {
         nioSocketServer.setFlag(true);
         nioSocketServer.start();
     }
+
     public boolean isFlag() {
         return flag;
     }

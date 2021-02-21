@@ -57,13 +57,7 @@ public class ClientHandler {
 
         String receivedMsg = null;
         try {
-            if (socketChannel.read(buffer) == -1) {
-                // 没有读到内容
-                socketChannel.shutdownOutput();
-                socketChannel.shutdownInput();
-                socketChannel.close();
-                System.out.println("断开连接");
-            } else {
+            if (socketChannel.read(buffer) != -1) {
                 // 讲buffer改为读取状态
                 buffer.flip();
                 receivedMsg = StandardCharsets.UTF_8.newDecoder().decode(buffer).toString();
@@ -77,4 +71,19 @@ public class ClientHandler {
         return receivedMsg;
     }
 
+    /**
+     * 处理连接就绪事件
+     */
+    public void handleConnect(SocketChannel socketChannel) throws IOException {
+        // 判断是否正常连接，但是还没有完成，需要调用finishConnect完成连接。可以参考javadoc
+        if (!socketChannel.isConnectionPending()) {
+            return;
+        }
+        // 完成连接
+        if (!socketChannel.finishConnect()) {
+            System.out.println("failed to connect the server");
+        }
+        // 注册写事件，发送消息到服务端；channel默认是可写的，可以不用注册
+        socketChannel.register(selector, SelectionKey.OP_WRITE | SelectionKey.OP_READ);
+    }
 }
