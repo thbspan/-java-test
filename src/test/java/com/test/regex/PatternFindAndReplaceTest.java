@@ -16,7 +16,7 @@ public class PatternFindAndReplaceTest {
         replacements.put("env2", "2");
         replacements.put("env3", "3");
 
-        String line = "${env4}sojods${env2}${env3}-${env1}";
+        String line = "head{env4}sojods${env2}${env3}-${env1}-tail";
 
         Pattern pattern = Pattern.compile("\\$\\{([^}]+)\\}");
         StringBuilder builder = new StringBuilder();
@@ -24,7 +24,7 @@ public class PatternFindAndReplaceTest {
         while (matcher.find()) {
             String replacement = replacements.get(matcher.group(1));
             if (replacement != null) {
-                matcher.appendReplacement(builder, replacement);
+                matcher.appendReplacement(builder, Matcher.quoteReplacement(replacement));
             }
         }
         matcher.appendTail(builder);
