@@ -1,6 +1,7 @@
 package com.test.util;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 
@@ -39,7 +40,9 @@ public class LFUCache {
         } else {
             if (cache.size() == capacity) {
                 Node deadNode = removeNode();
-                cache.remove(deadNode.key);
+                if (deadNode != null) {
+                    cache.remove(deadNode.key);
+                }
             }
             Node newNode = new Node(key, value);
             cache.put(key, newNode);
@@ -67,8 +70,14 @@ public class LFUCache {
 
     private Node removeNode() {
         LinkedHashSet<Node> nodes = freqMap.get(minFreq);
-        Node deadNode = nodes.iterator().next();
-        nodes.remove(deadNode);
+        Iterator<Node> iterator = nodes.iterator();
+        Node deadNode;
+        if (iterator.hasNext()) {
+            deadNode = iterator.next();
+            iterator.remove();
+        } else {
+            deadNode = null;
+        }
         return deadNode;
     }
 }

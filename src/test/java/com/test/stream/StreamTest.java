@@ -47,7 +47,7 @@ public class StreamTest {
     @Test
     public void testJoin() {
         List<String> words = Arrays.asList("Hello", "World", "Stream", "Test");
-        System.out.println(words.stream().collect(Collectors.joining(" ")));
+        System.out.println(String.join(" ", words));
     }
 
     @Test
