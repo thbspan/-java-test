@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ExchangerTest {
     static class Producer extends Thread {
-        private Exchanger<Integer> exchanger;
+        private final Exchanger<Integer> exchanger;
         private static int data = 0;
 
         Producer(String name, Exchanger<Integer> exchanger) {

@@ -10,12 +10,12 @@ public class ByteOrderTest {
         System.out.println("default java endian" + buffer.order());
         buffer.putShort((short) 1);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
-        System.out.println("Now:" + buffer.order().toString());
+        System.out.println("Now:" + buffer.order());
         buffer.putShort((short) 2);
         buffer.flip();
         for (int i = 0; i < buffer.limit(); i++) {
             System.out.println(buffer.get() & 0xFF);
         }
-        System.out.println("My PC:" + ByteOrder.nativeOrder().toString());
+        System.out.println("My PC:" + ByteOrder.nativeOrder());
     }
 }

@@ -23,7 +23,6 @@ public class GenericTokenParser {
         if (start == -1) {
             return text;
         }
-        char[] src = text.toCharArray();
         // 已经处理到的字符索引位置
         int offset = 0;
 
@@ -36,17 +35,17 @@ public class GenericTokenParser {
             } else {
                 expression.setLength(0);
             }
-            builder.append(src, offset, start - offset);
+            builder.append(text, offset, start);
             offset = start + openToken.length();
             // closeToken index
             int end = text.indexOf(closeToken, offset);
             if (end > -1) {
-                expression.append(src, offset, end - offset);
+                expression.append(text, offset, end);
                 builder.append(handler.handleToken(expression.toString()));
                 offset = end + closeToken.length();
             } else {
                 // 没有找到end
-                builder.append(src, start, src.length - start);
+                builder.append(text, start, text.length());
             }
             start = text.indexOf(openToken, offset);
         } while (start > -1);

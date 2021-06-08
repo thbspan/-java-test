@@ -7,7 +7,7 @@ import org.apache.commons.pool2.ObjectPool;
 
 public class PooledReaderUtil {
 
-    private ObjectPool<StringBuffer> pool;
+    private final ObjectPool<StringBuffer> pool;
 
     public PooledReaderUtil(ObjectPool<StringBuffer> pool) {
         this.pool = pool;
@@ -24,7 +24,7 @@ public class PooledReaderUtil {
         } catch (IOException e) {
             throw e;
         } catch (Exception e) {
-            throw new RuntimeException("Unable to borrow buffer from pool" + e.toString());
+            throw new RuntimeException("Unable to borrow buffer from pool" + e);
         }
     }
 

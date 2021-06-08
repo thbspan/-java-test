@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class DiskClassLoader extends ClassLoader {
-    private String libPath;
+    private final String libPath;
 
     public DiskClassLoader(String path) {
         libPath = path;

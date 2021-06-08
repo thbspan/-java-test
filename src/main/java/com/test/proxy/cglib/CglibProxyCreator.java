@@ -6,9 +6,9 @@ import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 
 public class CglibProxyCreator implements ProxyCreator {
-    private Object target;
+    private final Object target;
 
-    private MethodInterceptor methodInterceptor;
+    private final MethodInterceptor methodInterceptor;
 
     public CglibProxyCreator(Object target, MethodInterceptor methodInterceptor) {
         this.target = target;

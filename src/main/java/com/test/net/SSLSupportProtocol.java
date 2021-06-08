@@ -16,22 +16,22 @@ public class SSLSupportProtocol {
         String[] protocols = socket.getSupportedProtocols();
 
         System.out.println("Supported Protocols: " + protocols.length);
-        for (int i = 0; i < protocols.length; i++) {
-            System.out.println(" " + protocols[i]);
+        for (String protocol : protocols) {
+            System.out.println(" " + protocol);
         }
 
         protocols = socket.getEnabledProtocols();
 
         System.out.println("Enabled Protocols: " + protocols.length);
-        for (int i = 0; i < protocols.length; i++) {
-            System.out.println(" " + protocols[i]);
+        for (String protocol : protocols) {
+            System.out.println(" " + protocol);
         }
 
         String[] enabledCipherSuites = socket.getEnabledCipherSuites();
         System.out.println("Enabled cipher suites: " + enabledCipherSuites.length);
 
-        for (int i = 0; i < enabledCipherSuites.length; i++) {
-            System.out.println(" " + enabledCipherSuites[i]);
+        for (String enabledCipherSuite : enabledCipherSuites) {
+            System.out.println(" " + enabledCipherSuite);
         }
         // TLS_RSA_WITH_AES_256_CBC_SHA
         socket.setEnabledCipherSuites(new String[]{"TLS_RSA_WITH_AES_256_CBC_SHA"});
