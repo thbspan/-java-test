@@ -167,8 +167,6 @@ public class StreamTest {
         List<String> words = Arrays.asList("Hello", "World");
         Stream<String> stream = words.stream();
         stream.forEach(System.out::println);
-        Assertions.assertThrows(IllegalStateException.class, () -> {
-            stream.forEach(System.out::println);
-        });
+        Assertions.assertThrows(IllegalStateException.class, () -> stream.forEach(System.out::println));
     }
 }
