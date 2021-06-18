@@ -161,4 +161,14 @@ public class StreamTest {
                 .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
         System.out.println(list);
     }
+
+    @Test
+    public void testStreamReuseException() {
+        List<String> words = Arrays.asList("Hello", "World");
+        Stream<String> stream = words.stream();
+        stream.forEach(System.out::println);
+        Assertions.assertThrows(IllegalStateException.class, () -> {
+            stream.forEach(System.out::println);
+        });
+    }
 }
