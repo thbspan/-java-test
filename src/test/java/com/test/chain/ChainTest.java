@@ -1,7 +1,11 @@
 package com.test.chain;
 
+import org.junit.jupiter.api.Test;
+
 public class ChainTest {
-    public static void main(String[] args) {
+
+    @Test
+    public void test() {
         Handler handler1 = new ConcreteHandler();
         Handler handler2 = new ConcreteHandler();
         handler1.setSuccessor(handler2);
